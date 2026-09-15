@@ -32,4 +32,6 @@ The executables are placed under `build/`. The sorting algorithms are intentiona
 ## Collaboration
 
 The team workflow and branch conventions are documented in
-[`docs/collaboration-guide.md`](docs/collaboration-guide.md).
+[`docs/collaboration-guide.md`](docs/collaboration-guide.md). A proposed
+three-person division of work is in
+[`docs/team-roles.md`](docs/team-roles.md).
