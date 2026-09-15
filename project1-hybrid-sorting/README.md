@@ -29,3 +29,7 @@ make test
 
 The executables are placed under `build/`. The sorting algorithms are intentionally left for students to implement.
 
+## Collaboration
+
+The team workflow and branch conventions are documented in
+[`docs/collaboration-guide.md`](docs/collaboration-guide.md).
