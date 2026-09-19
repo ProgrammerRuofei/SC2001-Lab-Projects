@@ -2,9 +2,11 @@
 
 This directory is reserved for experiment infrastructure, kept separate from the core sorting implementation.
 
-Future Python scripts may automate program runs, process CSV output, and generate plots. They should call or consume results from the C++ program rather than reimplementing the sorting algorithms.
+Python automates program runs and collects CSV output by calling the C++
+executable. It does not reimplement the sorting algorithms.
 
-No plotting or experiment automation has been implemented yet.
+Team setup and study commands are documented in
+[`docs/experiment-running-guide.md`](../docs/experiment-running-guide.md).
 
 ## Single-run C++ interface
 
@@ -58,6 +60,12 @@ Input generation happens before CPU timing begins. The sorted-result check
 happens after timing ends. Errors and usage information are written to standard
 error and return a nonzero exit status.
 
-Future Python automation should write the CSV header once, call this executable
-for the selected combinations of `n`, `S`, and `seed`, and append successful
-data rows. It must not reimplement the sorting algorithms.
+The automation entry point is:
+
+```bash
+python3 experiments/scripts/run_experiments.py --help
+```
+
+It writes a CSV header once, calls the executable for selected combinations of
+`n`, `S`, and `seed`, validates each returned row, and records metadata.
+Plotting remains a separate later stage.
