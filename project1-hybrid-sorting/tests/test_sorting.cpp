@@ -32,6 +32,36 @@ bool checkInsertion(
     return true;
 }
 
+bool checkHybrid(
+    const char* name,
+    std::vector<int> values,
+    int left,
+    int right,
+    int threshold
+) {
+    std::vector<int> expected=values;
+
+    if(left<=right){
+        std::sort(expected.begin()+left,expected.begin()+right+1);
+    }
+
+    sc2001::ComparisonCount comparisons=0;
+    sc2001::hybridMergeSort(
+        values,
+        left,
+        right,
+        threshold,
+        comparisons
+    );
+
+    if(values != expected){
+        std::cerr<<"FAIL: "<<name<<"\n";
+        return false;
+    }
+
+    return true;
+}
+
 }  // namespace
 
 int main() {
@@ -200,5 +230,125 @@ int main() {
     }
 
     std::cout<<"PASS: non-zero-start subarray merge sort test\n";
+
+    bool hybridTestsPassed=true;
+    hybridTestsPassed &= checkHybrid("empty hybrid range",{},0,-1,1);
+    hybridTestsPassed &= checkHybrid("single hybrid value",{9},0,0,1);
+    hybridTestsPassed &= checkHybrid("two hybrid values",{5,2},0,1,1);
+    hybridTestsPassed &= checkHybrid(
+        "already-sorted hybrid input",
+        {1,2,3,4,5},
+        0,
+        4,
+        2
+    );
+    hybridTestsPassed &= checkHybrid(
+        "reverse-sorted hybrid input",
+        {5,4,3,2,1},
+        0,
+        4,
+        2
+    );
+    hybridTestsPassed &= checkHybrid(
+        "duplicate hybrid values",
+        {3,1,3,1,2,2},
+        0,
+        5,
+        3
+    );
+    hybridTestsPassed &= checkHybrid(
+        "non-zero-start hybrid subarray",
+        {99,8,3,5,1,77},
+        1,
+        4,
+        2
+    );
+
+    const std::vector<int> thresholdOneInput={8,3,5,1,7,2};
+    std::vector<int> originalValues=thresholdOneInput;
+    std::vector<int> thresholdOneValues=thresholdOneInput;
+    sc2001::ComparisonCount originalComparisons=0;
+    sc2001::ComparisonCount thresholdOneComparisons=0;
+
+    sc2001::mergeSort(
+        originalValues,
+        0,
+        static_cast<int>(originalValues.size())-1,
+        originalComparisons
+    );
+    sc2001::hybridMergeSort(
+        thresholdOneValues,
+        0,
+        static_cast<int>(thresholdOneValues.size())-1,
+        1,
+        thresholdOneComparisons
+    );
+
+    if(
+        thresholdOneValues != originalValues ||
+        thresholdOneComparisons != originalComparisons
+    ){
+        std::cerr<<"FAIL: S=1 should match original merge sort\n";
+        hybridTestsPassed=false;
+    }
+
+    const std::vector<int> wholeInsertionInput={5,2,4};
+    std::vector<int> insertionOnlyValues=wholeInsertionInput;
+    std::vector<int> largeThresholdValues=wholeInsertionInput;
+    sc2001::ComparisonCount insertionOnlyComparisons=0;
+    sc2001::ComparisonCount largeThresholdComparisons=0;
+
+    sc2001::insertionSort(
+        insertionOnlyValues,
+        0,
+        static_cast<int>(insertionOnlyValues.size())-1,
+        insertionOnlyComparisons
+    );
+    sc2001::hybridMergeSort(
+        largeThresholdValues,
+        0,
+        static_cast<int>(largeThresholdValues.size())-1,
+        static_cast<int>(largeThresholdValues.size()),
+        largeThresholdComparisons
+    );
+
+    if(
+        largeThresholdValues != insertionOnlyValues ||
+        largeThresholdComparisons != insertionOnlyComparisons
+    ){
+        std::cerr<<"FAIL: S>=n should match insertion sort\n";
+        hybridTestsPassed=false;
+    }
+
+    std::mt19937 hybridGenerator(2002);
+    std::uniform_int_distribution<int> hybridDistribution(-10,10);
+
+    for(int size=0;size<=50;++size){
+        std::vector<int> randomValues(size);
+
+        for(int& value : randomValues){
+            value=hybridDistribution(hybridGenerator);
+        }
+
+        for(int threshold : {1,2,5,100}){
+            if(!checkHybrid(
+                "random hybrid input",
+                randomValues,
+                0,
+                size-1,
+                threshold
+            )){
+                std::cerr<<"  size="<<size
+                         <<", S="<<threshold<<'\n';
+                hybridTestsPassed=false;
+            }
+        }
+    }
+
+    if(!hybridTestsPassed){
+        return 1;
+    }
+
+    std::cout<<"PASS: all hybrid merge sort tests\n";
     return 0;
 }
