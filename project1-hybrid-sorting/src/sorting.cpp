@@ -2,7 +2,34 @@
 
 namespace sc2001 {
 
-// TODO(student): Implement Insertion Sort here.
+void insertionSort(
+    std::vector<int>& values,
+    int left,
+    int right,
+    ComparisonCount& keyComparisons
+) {
+    if(left >= right){
+        return;
+    }
+
+    for(int i=left+1;i<=right;++i){
+        const int key=values[i];
+        int j=i-1;
+
+        while(j>=left){
+            ++keyComparisons;
+
+            if(values[j]<=key){
+                break;
+            }
+
+            values[j+1]=values[j];
+            --j;
+        }
+
+        values[j+1]=key;
+    }
+}
 
 // TODO(student): Implement the two-pointer merge operation here.
 void merge(
