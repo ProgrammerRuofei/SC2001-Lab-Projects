@@ -31,7 +31,7 @@ void insertionSort(
     }
 }
 
-// TODO(student): Implement the two-pointer merge operation here.
+// Merge two adjacent sorted ranges.
 void merge(
     std::vector<int>& values,
     int left,
@@ -72,7 +72,7 @@ void merge(
         ++position;
     }
 }
-// TODO(student): Implement original Merge Sort here.
+// Original recursive Merge Sort.
 void mergeSort(
     std::vector<int>& values,
     int left,
@@ -91,7 +91,44 @@ void mergeSort(
     merge(values, left, middle, right, keyComparisons);
 }
 
-// TODO(student): Implement Hybrid Merge Sort here after the earlier algorithms
-// have been implemented and tested.
+// Hybrid Merge Sort using Insertion Sort for ranges at or below the threshold.
+void hybridMergeSort(
+    std::vector<int>& values,
+    int left,
+    int right,
+    int threshold,
+    ComparisonCount& keyComparisons
+) {
+    if(left >= right){
+        return;
+    }
+
+    const int size=right-left+1;
+
+    if(size <= threshold){
+        insertionSort(values,left,right,keyComparisons);
+        return;
+    }
+
+    const int middle=left+(right-left)/2;
+
+    hybridMergeSort(
+        values,
+        left,
+        middle,
+        threshold,
+        keyComparisons
+    );
+
+    hybridMergeSort(
+        values,
+        middle+1,
+        right,
+        threshold,
+        keyComparisons
+    );
+
+    merge(values,left,middle,right,keyComparisons);
+}
 
 }  // namespace sc2001
