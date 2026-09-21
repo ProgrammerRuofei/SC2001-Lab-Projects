@@ -1,0 +1,26 @@
+{
+  "created_utc": "2026-09-20T15:57:01.829286+00:00",
+  "study": "optimal-s",
+  "case_count": 120,
+  "max_value": 10000000,
+  "seeds": [
+    2001,
+    2002,
+    2003,
+    2004,
+    2005
+  ],
+  "git_commit": "50d24f1c4ca42f11efa6c44481da7ca4ab63a701",
+  "git_dirty": true,
+  "hostname": "ViviandeMacBook-Air.local",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.6",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+  "cpu_time_definition": "std::clock CPU seconds around sorting only; input generation and sorted-result validation are excluded",
+  "command": [
+    "experiments/scripts/run_experiments.py",
+    "optimal-s",
+    "--output",
+    "results/optimal_s.csv"
+  ]
+}

@@ -8,6 +8,7 @@ import csv
 import json
 import os
 import platform
+import random
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -24,8 +25,11 @@ CSV_FIELDS = [
     "S",
     "x",
     "seed",
+    "timing_repetitions",
     "key_comparisons",
     "cpu_seconds",
+    "run_index",
+    "block",
 ]
 
 DEFAULT_MAX_VALUE = 10_000_000
@@ -95,7 +99,17 @@ def parse_arguments() -> argparse.Namespace:
         "--s-values",
         nargs="+",
         type=positive_integer,
-        help="override the candidate S values",
+        help="candidate S values; combined with --s-range when both are used",
+    )
+    parser.add_argument(
+        "--s-range",
+        nargs=3,
+        type=positive_integer,
+        metavar=("START", "STOP", "STEP"),
+        help=(
+            "add an inclusive arithmetic S range, for example "
+            "--s-range 64 256 4"
+        ),
     )
     parser.add_argument(
         "--fixed-s",
@@ -129,11 +143,55 @@ def parse_arguments() -> argparse.Namespace:
         action="store_true",
         help="skip make test and make; use only after a verified build",
     )
+    parser.add_argument(
+        "--case-order-seed",
+        type=nonnegative_integer,
+        help=(
+            "shuffle experiment-case order reproducibly to reduce timing "
+            "bias"
+        ),
+    )
+    parser.add_argument(
+        "--block-size",
+        type=positive_integer,
+        help=(
+            "split fixed-n seeds into balanced blocks of this size; every "
+            "block contains all selected S values"
+        ),
+    )
+    parser.add_argument(
+        "--timing-repetitions",
+        type=positive_integer,
+        default=1,
+        help=(
+            "repeat each sort and record mean CPU time; input copying and "
+            "validation remain outside each timed interval (default: 1)"
+        ),
+    )
     return parser.parse_args()
 
 
 def unique(values: list[int]) -> list[int]:
     return list(dict.fromkeys(values))
+
+
+def select_thresholds(
+    args: argparse.Namespace, defaults: list[int]
+) -> list[int]:
+    thresholds = list(args.s_values or [])
+
+    if args.s_range:
+        start, stop, step = args.s_range
+        if start > stop:
+            raise ValueError("--s-range START must not exceed STOP")
+        thresholds.extend(range(start, stop + 1, step))
+        if stop not in thresholds:
+            thresholds.append(stop)
+
+    if not thresholds:
+        thresholds = defaults
+
+    return sorted(unique(thresholds))
 
 
 def select_seeds(args: argparse.Namespace) -> list[int]:
@@ -153,7 +211,7 @@ def build_cases(args: argparse.Namespace) -> list[ExperimentCase]:
 
     if args.study == "pilot":
         n_values = unique(args.n_values or DEFAULT_PILOT_N_VALUES)
-        s_values = unique(args.s_values or DEFAULT_PILOT_S_VALUES)
+        s_values = select_thresholds(args, DEFAULT_PILOT_S_VALUES)
         for n in n_values:
             for seed in seeds:
                 cases.append(ExperimentCase("merge", n, 0, max_value, seed))
@@ -176,7 +234,7 @@ def build_cases(args: argparse.Namespace) -> list[ExperimentCase]:
 
     elif args.study == "fixed-n":
         n_values = unique(args.n_values or [args.fixed_n])
-        s_values = unique(args.s_values or DEFAULT_S_VALUES)
+        s_values = select_thresholds(args, DEFAULT_S_VALUES)
         for n in n_values:
             for threshold in s_values:
                 for seed in seeds:
@@ -188,7 +246,7 @@ def build_cases(args: argparse.Namespace) -> list[ExperimentCase]:
 
     elif args.study == "optimal-s":
         n_values = unique(args.n_values or DEFAULT_OPTIMAL_N_VALUES)
-        s_values = unique(args.s_values or DEFAULT_S_VALUES)
+        s_values = select_thresholds(args, DEFAULT_S_VALUES)
         for n in n_values:
             for threshold in s_values:
                 for seed in seeds:
@@ -220,7 +278,9 @@ def build_cases(args: argparse.Namespace) -> list[ExperimentCase]:
     return cases
 
 
-def command_for(case: ExperimentCase) -> list[str]:
+def command_for(
+    case: ExperimentCase, timing_repetitions: int = 1
+) -> list[str]:
     return [
         str(EXECUTABLE),
         case.algorithm,
@@ -228,7 +288,40 @@ def command_for(case: ExperimentCase) -> list[str]:
         str(case.threshold),
         str(case.max_value),
         str(case.seed),
+        str(timing_repetitions),
     ]
+
+
+def order_cases(
+    args: argparse.Namespace, cases: list[ExperimentCase]
+) -> list[tuple[ExperimentCase, int]]:
+    if args.block_size is None:
+        ordered = list(cases)
+        if args.case_order_seed is not None:
+            random.Random(args.case_order_seed).shuffle(ordered)
+        return [(case, 1) for case in ordered]
+
+    if args.study not in {"fixed-n", "optimal-s"}:
+        raise ValueError(
+            "--block-size is currently supported for fixed-n and optimal-s"
+        )
+
+    seeds = select_seeds(args)
+    ordered_cases: list[tuple[ExperimentCase, int]] = []
+    for block_index, start in enumerate(
+        range(0, len(seeds), args.block_size), start=1
+    ):
+        block_seeds = set(seeds[start : start + args.block_size])
+        block_cases = [case for case in cases if case.seed in block_seeds]
+        if args.case_order_seed is not None:
+            random.Random(
+                args.case_order_seed + block_index - 1
+            ).shuffle(block_cases)
+        ordered_cases.extend(
+            (case, block_index) for case in block_cases
+        )
+
+    return ordered_cases
 
 
 def run_checked(command: list[str]) -> subprocess.CompletedProcess[str]:
@@ -248,7 +341,11 @@ def build_and_test() -> None:
     subprocess.run(["make"], cwd=PROJECT_DIR, check=True)
 
 
-def parse_cpp_row(case: ExperimentCase, output: str) -> dict[str, str]:
+def parse_cpp_row(
+    case: ExperimentCase,
+    output: str,
+    expected_repetitions: int,
+) -> dict[str, str]:
     lines = [line for line in output.splitlines() if line.strip()]
     if len(lines) != 1:
         raise ValueError(
@@ -256,12 +353,21 @@ def parse_cpp_row(case: ExperimentCase, output: str) -> dict[str, str]:
         )
 
     fields = next(csv.reader(lines))
-    if len(fields) != 7:
+    if len(fields) != 8:
         raise ValueError(
-            f"expected 7 C++ CSV fields, received {len(fields)}: {fields}"
+            f"expected 8 C++ CSV fields, received {len(fields)}: {fields}"
         )
 
-    algorithm, n, threshold, max_value, seed, comparisons, cpu_seconds = fields
+    (
+        algorithm,
+        n,
+        threshold,
+        max_value,
+        seed,
+        repetitions,
+        comparisons,
+        cpu_seconds,
+    ) = fields
     expected = [
         case.algorithm,
         str(case.n),
@@ -273,6 +379,11 @@ def parse_cpp_row(case: ExperimentCase, output: str) -> dict[str, str]:
         raise ValueError(
             f"C++ row parameters {fields[:5]} do not match request {expected}"
         )
+    if int(repetitions) != expected_repetitions:
+        raise ValueError(
+            "C++ timing repetitions "
+            f"{repetitions} do not match request {expected_repetitions}"
+        )
     if int(comparisons) < 0 or float(cpu_seconds) < 0:
         raise ValueError("C++ runner returned a negative measurement")
 
@@ -282,6 +393,7 @@ def parse_cpp_row(case: ExperimentCase, output: str) -> dict[str, str]:
         "S": threshold,
         "x": max_value,
         "seed": seed,
+        "timing_repetitions": repetitions,
         "key_comparisons": comparisons,
         "cpu_seconds": cpu_seconds,
     }
@@ -302,6 +414,15 @@ def metadata(args: argparse.Namespace, cases: list[ExperimentCase]) -> dict:
         "case_count": len(cases),
         "max_value": args.max_value,
         "seeds": select_seeds(args),
+        "case_order_seed": args.case_order_seed,
+        "block_size": args.block_size,
+        "timing_repetitions": args.timing_repetitions,
+        "block_count": (
+            (len(select_seeds(args)) + args.block_size - 1)
+            // args.block_size
+            if args.block_size is not None
+            else 1
+        ),
         "git_commit": safe_command_output(["git", "rev-parse", "HEAD"]),
         "git_dirty": bool(
             safe_command_output(["git", "status", "--porcelain"])
@@ -330,12 +451,16 @@ def main() -> int:
 
     try:
         cases = build_cases(args)
+        ordered_cases = order_cases(args, cases)
         output_path = resolve_output(args.output)
 
         if args.dry_run:
-            print(f"Planned cases: {len(cases)}")
-            for case in cases:
-                print(" ".join(command_for(case)))
+            print(f"Planned cases: {len(ordered_cases)}")
+            for case, block in ordered_cases:
+                print(
+                    f"block={block} "
+                    + " ".join(command_for(case, args.timing_repetitions))
+                )
             return 0
 
         metadata_path = output_path.with_suffix(".meta.json")
@@ -363,16 +488,31 @@ def main() -> int:
             writer = csv.DictWriter(stream, fieldnames=CSV_FIELDS)
             writer.writeheader()
 
-            for index, case in enumerate(cases, start=1):
+            for index, (case, block) in enumerate(
+                ordered_cases, start=1
+            ):
                 print(
-                    f"[{index}/{len(cases)}] "
+                    f"[{index}/{len(ordered_cases)} block={block}] "
                     f"{case.algorithm} n={case.n} S={case.threshold} "
                     f"seed={case.seed}",
                     file=sys.stderr,
                 )
-                result = run_checked(command_for(case))
-                row = parse_cpp_row(case, result.stdout)
-                writer.writerow({"study": args.study, **row})
+                result = run_checked(
+                    command_for(case, args.timing_repetitions)
+                )
+                row = parse_cpp_row(
+                    case,
+                    result.stdout,
+                    args.timing_repetitions,
+                )
+                writer.writerow(
+                    {
+                        "study": args.study,
+                        **row,
+                        "run_index": index,
+                        "block": block,
+                    }
+                )
                 stream.flush()
 
         os.replace(partial_path, output_path)
@@ -381,7 +521,10 @@ def main() -> int:
             encoding="utf-8",
         )
 
-        print(f"Wrote {len(cases)} rows to {output_path}", file=sys.stderr)
+        print(
+            f"Wrote {len(ordered_cases)} rows to {output_path}",
+            file=sys.stderr,
+        )
         print(f"Wrote metadata to {metadata_path}", file=sys.stderr)
         return 0
 
@@ -392,4 +535,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

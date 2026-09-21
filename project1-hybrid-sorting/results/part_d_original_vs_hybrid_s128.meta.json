@@ -1,0 +1,42 @@
+{
+  "created_utc": "2026-09-21T06:26:45.643340+00:00",
+  "study": "compare",
+  "case_count": 6,
+  "max_value": 10000000,
+  "seeds": [
+    2001,
+    2002,
+    2003
+  ],
+  "case_order_seed": 7101,
+  "block_size": null,
+  "timing_repetitions": 1,
+  "block_count": 1,
+  "git_commit": "50d24f1c4ca42f11efa6c44481da7ca4ab63a701",
+  "git_dirty": true,
+  "hostname": "ViviandeMacBook-Air.local",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.6",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+  "cpu_time_definition": "std::clock CPU seconds around sorting only; input generation and sorted-result validation are excluded",
+  "command": [
+    "experiments/scripts/run_experiments.py",
+    "compare",
+    "--output",
+    "results/part_d_original_vs_hybrid_s128.csv",
+    "--compare-threshold",
+    "128",
+    "--n-values",
+    "10000000",
+    "--max-value",
+    "10000000",
+    "--seeds",
+    "2001",
+    "2002",
+    "2003",
+    "--case-order-seed",
+    "7101",
+    "--timing-repetitions",
+    "1"
+  ]
+}

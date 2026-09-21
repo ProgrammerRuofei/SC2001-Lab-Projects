@@ -128,38 +128,163 @@ x = 10M
 
 Override thresholds with `--s-values`.
 
+For the final fixed-`n` run, combine a small-`S` overview with a dense search
+from `S = 32` to `S = 256`. Add the exact recursion-boundary values that the
+step of four would otherwise miss:
+
+```bash
+python3 experiments/scripts/run_experiments.py fixed-n \
+  --output results/fixed_n_1m_final_1_256.csv \
+  --fixed-n 1000000 \
+  --s-range 32 256 4 \
+  --s-values 1 2 4 8 12 16 20 24 28 61 62 63 121 122 123 243 244 245 \
+  --seeds 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 \
+          2011 2012 2013 2014 2015 \
+  --case-order-seed 2001
+```
+
+This runs 74 distinct thresholds with 15 seeds, for 1,110 measurements. The
+small thresholds reveal the initial reduction in CPU time; the regular spacing
+from 32 to 256 resolves the low-runtime region; and the additional boundary
+values preserve the algorithmically important recursion changes. The fixed
+case-order seed shuffles the execution sequence reproducibly so that larger
+thresholds are not always measured later in the run.
+
+Analyze the final result with:
+
+```bash
+python3 experiments/scripts/analyze_fixed_n.py \
+  --input results/fixed_n_1m_final_1_256.csv \
+  --summary results/fixed_n_1m_final_1_256_summary.csv \
+  --figure-dir figures/fixed_n_1m_final_1_256
+```
+
+To inspect timing noise without replacing the formal figures, generate the
+separate CPU-time diagnostic:
+
+```bash
+python3 experiments/scripts/analyze_timing_diagnostics.py \
+  --input results/fixed_n_1m_final_1_256.csv \
+  --output figures/fixed_n_1m_timing_diagnostics/cpu_time_distribution_and_session_drift.png
+```
+
+The upper panel shows every raw timing together with the median, mean, and IQR.
+The lower panel subtracts the median for the corresponding threshold and plots
+the residual in CSV execution order. This separates threshold effects from
+timing drift during a long experiment session. The command reads the existing
+CSV and does not modify the formal result or figure directories.
+
+The shorter balanced CPU-time retest uses representative thresholds and three
+blocks of five seeds:
+
+```bash
+python3 experiments/scripts/run_experiments.py fixed-n \
+  --output results/fixed_n_1m_cpu_retest_balanced.csv \
+  --fixed-n 1000000 \
+  --s-values 32 48 60 61 62 63 64 96 121 122 123 128 160 192 224 243 244 245 256 \
+  --seeds 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 \
+          2011 2012 2013 2014 2015 \
+  --case-order-seed 3101 \
+  --block-size 5
+```
+
+Each block contains all 19 thresholds and five seeds, for 95 measurements per
+block and 285 measurements overall. Cases are randomized independently inside
+each block. This reduces the duration of one timing run while keeping every
+threshold represented in every block.
+
 ## Part (c)(iii): suitable S across input sizes
+
+The completed study uses 15 seeds and three balanced blocks at each input size.
+The two smaller-input studies extend to `S = 4,096`; the `n = 1,000,000`
+study already shows the right-hand rise by `S = 256`.
 
 ```bash
 python3 experiments/scripts/run_experiments.py optimal-s \
-  --output results/optimal_s.csv
+  --output results/part_c_iii_n10k_expanded_repeated.csv \
+  --n-values 10000 \
+  --s-values 32 48 60 61 62 63 64 78 79 80 96 121 122 123 128 155 156 157 160 192 224 243 244 245 256 311 312 313 384 512 624 625 768 1024 1249 1250 1536 2048 2499 2500 3000 4096 \
+  --seeds 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 \
+  --block-size 5 \
+  --case-order-seed 5101 \
+  --timing-repetitions 100
 ```
 
-Proposed defaults:
+The `n = 100,000` run uses its own recursion-boundary list through `4,096`,
+case-order seed `6101`, and `--timing-repetitions 10`. The stable balanced Part
+(c)(ii) retest supplies the `n = 1,000,000` CPU result.
+
+Generate the Part (c)(iii) summary and figures with:
+
+```bash
+python3 experiments/scripts/analyze_optimal_s.py \
+  --comparison-inputs \
+    results/part_c_iii_n10k_left_repeated.csv \
+    results/part_c_iii_n10k_expanded_repeated.csv \
+    results/part_c_iii_n100k_left_repeated.csv \
+    results/part_c_iii_n100k_expanded_repeated.csv \
+    results/part_c_iii_n1m_balanced.csv \
+  --cpu-inputs \
+    results/part_c_iii_n10k_left_repeated.csv \
+    results/part_c_iii_n10k_expanded_repeated.csv \
+    results/part_c_iii_n100k_left_repeated.csv \
+    results/part_c_iii_n100k_expanded_repeated.csv \
+    results/part_c_iii_n1m_left_balanced.csv \
+    results/fixed_n_1m_cpu_retest_balanced.csv \
+  --summary results/part_c_iii_summary.csv \
+  --figure-dir figures/part_c_iii
+```
+
+The methodology and interpretation are documented in
+[`part-c-iii-analysis.md`](part-c-iii-analysis.md). The raw long-session CPU
+measurements are retained for audit but are not the formal timing result.
+
+For short sorts, `--timing-repetitions` repeats the sort on fresh copies of the
+same generated input and records the mean sorting CPU time. Input copying and
+correctness validation remain outside each timed interval. The expanded final
+scans use 100 repetitions for `n = 10,000`, 10 for `n = 100,000`, and extend
+both threshold ranges to `S = 4,096` with recursion-boundary samples. Their
+output files are:
 
 ```text
-n = 10K; 100K; 1M
-S = 1; 2; 4; 8; 16; 32; 64; 128
-seeds = 2001-2005
-x = 10M
+results/part_c_iii_n10k_expanded_repeated.csv
+results/part_c_iii_n100k_expanded_repeated.csv
+results/part_c_iii_n10k_left_repeated.csv
+results/part_c_iii_n100k_left_repeated.csv
+results/part_c_iii_n1m_left_balanced.csv
 ```
-
-Use the coarse results to select a narrower S range for a later fine search.
-Record both the comparison-optimal S and time-optimal S.
 
 ## Part (d): original versus Hybrid at 10M
 
-Part (d) requires an S selected from Part (c). It is deliberately not given a
-default.
+Part (c)(iii) selected `S = 128` as a practical threshold for the current
+implementation. See [`part-d-experiment-plan.md`](part-d-experiment-plan.md)
+for the paired 10M-input procedure and reporting checks. The completed
+three-seed run is analyzed in [`part-d-analysis.md`](part-d-analysis.md).
 
 ```bash
 python3 experiments/scripts/run_experiments.py compare \
-  --output results/original_vs_hybrid.csv \
-  --compare-threshold REPLACE_WITH_SELECTED_S
+  --output results/part_d_original_vs_hybrid_s128.csv \
+  --compare-threshold 128
 ```
 
 The default comparison uses `n=10M`, seeds 2001-2003, and `x=10M`. For each
 seed, original and Hybrid receive the same reproducible input.
+
+Generate the Part (d) summary and figures with:
+
+```bash
+python3 experiments/scripts/analyze_part_d.py \
+  --input results/part_d_original_vs_hybrid_s128.csv \
+  --summary results/part_d_original_vs_hybrid_s128_summary.csv \
+  --figure-dir figures/part_d
+```
+
+This writes the per-seed paired comparison/CPU-time percentages (plus a
+median row) to the summary CSV, and two figures
+(`part_d_key_comparisons.png`, `part_d_cpu_time.png`) that show each
+algorithm's mean across seeds as a bar with the individual seeds plotted as
+connected dots, so the seed-paired comparison stays visible alongside the
+aggregate.
 
 ## Output files
 
@@ -170,11 +295,16 @@ results/example.csv
 results/example.meta.json
 ```
 
-The CSV columns are:
+Newly generated CSV files contain:
 
 ```text
-study,algorithm,n,S,x,seed,key_comparisons,cpu_seconds
+study,algorithm,n,S,x,seed,timing_repetitions,key_comparisons,cpu_seconds,run_index,block
 ```
+
+`run_index` records the actual execution order. `block` identifies a balanced
+seed block when `--block-size` is used; otherwise it is `1`. Older CSV files
+without these diagnostic columns remain valid inputs to the analyzers.
+`timing_repetitions` records how many sorts were averaged for each timing.
 
 The metadata records the Git commit, dirty-worktree status, machine, operating
 system, Python version, compiler, invocation, and timing definition.
@@ -206,4 +336,3 @@ results/pilot_member_c.csv
 The next analysis stage will read the CSV files, compute summaries such as mean
 key comparisons and median CPU time, and create the required plots. Plotting is
 not part of this runner and must not alter the raw CSV files.
-
