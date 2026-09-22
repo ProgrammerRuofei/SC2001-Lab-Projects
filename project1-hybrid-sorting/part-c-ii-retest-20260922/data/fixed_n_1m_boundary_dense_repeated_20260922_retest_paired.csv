@@ -1,0 +1,6 @@
+comparison,seed_count,left_faster,right_faster,ties,median_difference_ms,two_sided_sign_test_p
+S=62 minus S=63,15,5,8,2,0.20000000000000284,0.5810546875
+S=62 minus S=64,15,4,9,2,0.3999999999999915,0.266845703125
+S=62 minus S=65,15,7,7,1,0.0,1.0
+S=121 minus S=122,15,7,7,1,0.0,1.0
+S=122 minus S=123,15,7,6,2,0.0,1.0

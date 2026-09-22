@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="500" viewBox="0 0 760 500">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#263238}.title{font-size:22px;font-weight:600}.axis{font-size:13px}.note{font-size:12px;fill:#546e7a}.grid{stroke:#e4e9ef;stroke-width:1}.frame{stroke:#607d8b;stroke-width:1.2}</style>
+<text x="85" y="34" class="title">Latest retest near the 61/62 boundary</text>
+<line x1="85" y1="430.00" x2="725" y2="430.00" class="grid"/>
+<text x="75" y="434.00" text-anchor="end" class="axis">92.4</text>
+<line x1="85" y1="357.00" x2="725" y2="357.00" class="grid"/>
+<text x="75" y="361.00" text-anchor="end" class="axis">94.2</text>
+<line x1="85" y1="284.00" x2="725" y2="284.00" class="grid"/>
+<text x="75" y="288.00" text-anchor="end" class="axis">96.0</text>
+<line x1="85" y1="211.00" x2="725" y2="211.00" class="grid"/>
+<text x="75" y="215.00" text-anchor="end" class="axis">97.8</text>
+<line x1="85" y1="138.00" x2="725" y2="138.00" class="grid"/>
+<text x="75" y="142.00" text-anchor="end" class="axis">99.6</text>
+<line x1="85" y1="65.00" x2="725" y2="65.00" class="grid"/>
+<text x="75" y="69.00" text-anchor="end" class="axis">101.4</text>
+<line x1="85.00" y1="357.00" x2="85.00" y2="89.33" stroke="#78909c"/>
+<rect x="57.00" y="271.83" width="56" height="24.33" fill="#bbdefb" stroke="#1565c0"/>
+<line x1="57.00" y1="284.00" x2="113.00" y2="284.00" stroke="#0d47a1" stroke-width="3"/>
+<text x="85.00" y="455" text-anchor="middle" class="axis">61</text>
+<line x1="245.00" y1="357.00" x2="245.00" y2="186.67" stroke="#78909c"/>
+<rect x="217.00" y="255.61" width="56" height="44.61" fill="#bbdefb" stroke="#1565c0"/>
+<line x1="217.00" y1="275.89" x2="273.00" y2="275.89" stroke="#0d47a1" stroke-width="3"/>
+<text x="245.00" y="455" text-anchor="middle" class="axis">62</text>
+<line x1="405.00" y1="405.67" x2="405.00" y2="243.44" stroke="#78909c"/>
+<rect x="377.00" y="271.83" width="56" height="60.83" fill="#bbdefb" stroke="#1565c0"/>
+<line x1="377.00" y1="292.11" x2="433.00" y2="292.11" stroke="#0d47a1" stroke-width="3"/>
+<text x="405.00" y="455" text-anchor="middle" class="axis">63</text>
+<line x1="565.00" y1="373.22" x2="565.00" y2="219.11" stroke="#78909c"/>
+<rect x="537.00" y="259.67" width="56" height="73.00" fill="#bbdefb" stroke="#1565c0"/>
+<line x1="537.00" y1="292.11" x2="593.00" y2="292.11" stroke="#0d47a1" stroke-width="3"/>
+<text x="565.00" y="455" text-anchor="middle" class="axis">64</text>
+<line x1="725.00" y1="381.33" x2="725.00" y2="202.89" stroke="#78909c"/>
+<rect x="697.00" y="263.72" width="56" height="52.72" fill="#bbdefb" stroke="#1565c0"/>
+<line x1="697.00" y1="292.11" x2="753.00" y2="292.11" stroke="#0d47a1" stroke-width="3"/>
+<text x="725.00" y="455" text-anchor="middle" class="axis">65</text>
+<line x1="85" y1="65" x2="85" y2="430" class="frame"/>
+<line x1="85" y1="430" x2="725" y2="430" class="frame"/>
+<text x="405.0" y="482" text-anchor="middle" class="axis">Threshold S</text>
+<text x="24" y="247.5" text-anchor="middle" class="axis" transform="rotate(-90 24 247.5)">CPU time (ms)</text>
+<text x="723" y="82" text-anchor="end" class="note">box: IQR; dark line: median; whisker: observed range</text>
+</svg>
