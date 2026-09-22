@@ -1,60 +1,70 @@
-# Part (c)(ii) 最新复测报告包
+# Part C(ii) Retest Report Package
 
-本文件夹集中保存 2026-09-22 第二轮密集复测的报告、原始数据、派生统计表、图表和复现脚本。
+This directory contains the report, raw data, derived statistics, figures, and
+reproduction scripts for the second dense Part C(ii) retest conducted on
+2026-09-22.
 
-## 入口
+The retest examines the apparent `S = 62` anomaly. The comparison-count change
+at the `61/62` boundary is an expected consequence of the recursion-tree
+structure. However, the isolated CPU-time peak previously observed at `S = 62`
+was not reproduced and is best interpreted as timing noise rather than an
+algorithm-specific anomaly.
 
-- 完整中文报告：`part-c-ii-analysis-zh.md`
-- Complete English report: `part-c-ii-analysis-en.md`
-- 原始数据与统计结果：`data/`
-- 报告图表：`figures/`
-- 分析与制图脚本：`scripts/`
+## Contents
 
-## 文件结构
+- Full report: `part-c-ii-analysis-en.md`
+- Raw data and derived statistics: `data/`
+- Report figures: `figures/`
+- Analysis and figure-generation scripts: `scripts/`
+
+## Directory Structure
 
 ```text
 part-c-ii-retest-20260922/
-├── README.md
-├── part-c-ii-analysis-en.md
-├── part-c-ii-analysis-zh.md
-├── data/
-│   ├── fixed_n_1m_boundary_dense_repeated_20260922_retest.csv
-│   ├── fixed_n_1m_boundary_dense_repeated_20260922_retest.meta.json
-│   ├── fixed_n_1m_boundary_dense_repeated_20260922_retest_summary.csv
-│   ├── fixed_n_1m_boundary_dense_repeated_20260922_retest_regions.csv
-│   └── fixed_n_1m_boundary_dense_repeated_20260922_retest_paired.csv
-├── figures/
-│   ├── comparisons_vs_s.svg
-│   ├── cpu_time_vs_s.svg
-│   ├── boundary_61_65.svg
-│   ├── boundary_121_123.svg
-│   └── timing_session_drift.svg
-└── scripts/
-    ├── prepare_retest_report.py
-    └── compare_session_drift.py
+|-- README.md
+|-- part-c-ii-analysis-en.md
+|-- data/
+|   |-- fixed_n_1m_boundary_dense_repeated_20260922_retest.csv
+|   |-- fixed_n_1m_boundary_dense_repeated_20260922_retest.meta.json
+|   |-- fixed_n_1m_boundary_dense_repeated_20260922_retest_summary.csv
+|   |-- fixed_n_1m_boundary_dense_repeated_20260922_retest_regions.csv
+|   `-- fixed_n_1m_boundary_dense_repeated_20260922_retest_paired.csv
+|-- figures/
+|   |-- comparisons_vs_s.svg
+|   |-- cpu_time_vs_s.svg
+|   |-- boundary_61_65.svg
+|   |-- boundary_121_123.svg
+|   `-- timing_session_drift.svg
+`-- scripts/
+    |-- prepare_retest_report.py
+    `-- compare_session_drift.py
 ```
 
-## 数据范围
+## Dataset Scope
 
-- `n = 1,000,000`
-- 76 个阈值，覆盖 `S = 32–260` 并加密三个递归边界
-- 15 个随机 seed
-- 每条记录内部 5 次排序
-- 1,140 条原始记录
+- Input size: `n = 1,000,000`
+- Thresholds: 76 values covering `S = 32–260`, with dense sampling around
+  three recursion boundaries
+- Random seeds: 15
+- Timed sorts per recorded case: 5
+- Raw records: 1,140
 
-报告和图表均使用本文件夹 `data/` 中的最新复测数据生成，图片链接均为文件夹内部相对路径。
+The report and figures were generated from the latest retest data in this
+directory's `data/` folder. All figure links in the report use relative paths
+within this package.
 
-## 重新生成汇总表和图表
+## Reproducing the Summaries and Figures
 
-在本文件夹中运行：
+Run the following command from this directory in PowerShell:
 
-```text
-python scripts/prepare_retest_report.py \
-  --input data/fixed_n_1m_boundary_dense_repeated_20260922_retest.csv \
-  --summary data/fixed_n_1m_boundary_dense_repeated_20260922_retest_summary.csv \
-  --regions data/fixed_n_1m_boundary_dense_repeated_20260922_retest_regions.csv \
-  --paired data/fixed_n_1m_boundary_dense_repeated_20260922_retest_paired.csv \
+```powershell
+python scripts/prepare_retest_report.py `
+  --input data/fixed_n_1m_boundary_dense_repeated_20260922_retest.csv `
+  --summary data/fixed_n_1m_boundary_dense_repeated_20260922_retest_summary.csv `
+  --regions data/fixed_n_1m_boundary_dense_repeated_20260922_retest_regions.csv `
+  --paired data/fixed_n_1m_boundary_dense_repeated_20260922_retest_paired.csv `
   --figure-dir figures
 ```
 
-该脚本只使用 Python 标准库，不需要额外安装绘图库。
+The script uses only the Python standard library; no additional plotting
+package is required.
