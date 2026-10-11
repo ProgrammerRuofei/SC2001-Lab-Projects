@@ -1,0 +1,5 @@
+suite,n,m,requested_density,weight_min,weight_max,source,graph_seeds,warmup_repeats,timing_repeats
+pilot_sparse_small,100,400,,1,1000,0,2001,1,3
+pilot_dense_medium,400,39900,0.5,1,1000,0,2001,1,3
+pilot_dense_max,1600,639600,0.5,1,1000,0,2001,1,3
+pilot_matrix_max,3200,12800,,1,1000,0,2001,1,3
