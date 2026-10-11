@@ -36,6 +36,8 @@ env/
 project1-hybrid-sorting/data/
 project1-hybrid-sorting/datasets/
 project1-hybrid-sorting/results/raw/
+project2-dijkstra/data/
+project2-dijkstra/results/raw/
 *.raw
 
 # Keep small CSV summaries and figures versionable by default.
