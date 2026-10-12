@@ -1,6 +1,6 @@
 # Experiment inputs and planned workflow
 
-Configuration tables and CLI scaffold scripts exist; runner and analysis processing remain pending.
+Configuration tables and the C++ measurement CLI work. Python runner and analysis processing remain pending. Four entry-point pilot configurations have been validated; see docs/running-guide.md.
 
 - [pilot.csv](configs/pilot.csv): small checks plus largest proposed matrix/dense inputs.
 - [main.csv](configs/main.csv): sparse growth, dense growth, and fixed-n varying-density suites.

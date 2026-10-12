@@ -114,4 +114,4 @@ Add a Makefile with C++17, common warnings, and optimized measurement builds suc
 
 Proposed CLI parameters: --n, --m, --seed, --source, --weight-min, --weight-max, --warmup, --repeats, --order-seed, --mode. Modes are check/timing/count. A failed run is an error, not a zero-millisecond sample.
 
-Graph conversion and result formatting are implemented; algorithm/generator/measurement logic remains pending. Current help/demo and build commands are described in the [framework guide](framework-guide.md); full measurement CLI arguments remain proposed.
+Graph conversion and result formatting are implemented; both algorithms and indexed heap are implemented; connected graph generation is implemented; measurement modes and random-input CLI are implemented. Commands and current flags are in the [running guide](running-guide.md).

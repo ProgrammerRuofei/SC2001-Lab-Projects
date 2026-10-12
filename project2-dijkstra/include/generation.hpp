@@ -14,7 +14,9 @@ struct GraphSpec {
     Weight weight_max = 1000;
 };
 
-// Planned implementation: shuffled spanning path, then extra distinct edges.
+inline constexpr const char* kGraphGeneratorVersion = "connected-path-v1";
+
+// Shuffled spanning path, then extra distinct edges.
 // This is connected by construction, not uniform over all connected graphs.
 // Reject infeasible sizes, invalid weights, and unsafe distance bounds.
 EdgeListGraph generate_connected_graph(const GraphSpec& spec);

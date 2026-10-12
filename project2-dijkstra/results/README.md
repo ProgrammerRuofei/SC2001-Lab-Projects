@@ -1,6 +1,6 @@
 # Result storage
 
-There are no measured results. Configuration tables and theoretical expectations must not be presented as observations.
+Entry-point pilot measurements are available locally in raw/pilot-entrypoint-check/: 24 timing rows, 8 count rows and environment metadata. Formal main experiments remain pending; pilot validation is not a final performance conclusion. Configuration tables and theoretical expectations must not be presented as observations.
 
 Planned layout:
 

@@ -1,79 +1,44 @@
-# Framework guide: available infrastructure and pending work
+# Framework status and entry points
 
-## Build and begin
+## Implemented
 
-Run from project2-dijkstra:
+- Shared graph conversion, fixed teaching input and CSV formatting.
+- Matrix/array Dijkstra and indexed binary heap/list Dijkstra.
+- Connected random generator with exact n/m and reproducible seeds.
+- Shared test-only Bellman-Ford reference and independent integration checks.
+- Random-input CLI and check/timing/count pipeline.
+- Full C++ tests and standard-library Python CLI validation.
+
+## Pending
+
+Python batch experiment execution, aggregation and plotting logic remain TODOs in experiments/scripts/. Their --help parsers exist but actual processing still exits PENDING. This is separate from the now-working C++ measurement entry point.
+
+## Commands
 
 ```bash
-make
-make test-graph
+make -j2 all test
 ./build/dijkstra_benchmark --help
-```
-
-The framework builds a C++17 binary with warnings and -O2. Shared graph conversion is implemented and tested. Build products are ignored by Git.
-
-```text
-include/
-  types.hpp           Vertex/Weight/Distance and INF conventions
-  graph.hpp           Shared canonical edges, matrix/list types and conversions
-  examples.hpp        Available fixed graph and expected distances
-  dijkstra.hpp        Shared algorithm result and optional counters
-  min_heap.hpp        Member B's heap interface
-  generation.hpp      Member C's random input interface
-  output.hpp          Available result formatter; C owns extensions
-  benchmark.hpp       Member C's future check/timing/count entry point
-  scaffold.hpp        Explicit NotImplemented exception
-src/
-  graph.cpp           IMPLEMENTED: validated symmetric conversion
-  output.cpp          IMPLEMENTED: vertex,distance,parent CSV formatting
-  main.cpp            AVAILABLE: help and fixed-input demo dispatch
-  dijkstra_matrix.cpp TODO: Member A
-  min_heap.cpp        TODO: Member B core heap operations
-  dijkstra_heap.cpp    TODO: Member B
-  generation.cpp      TODO: Member C
-  benchmark.cpp       TODO: Member C
-tests/
-  test_graph.cpp      Available graph conversion/validation checks
-  test_matrix.cpp     Initial A acceptance cases; extend before handoff
-  test_heap.cpp       Initial B heap acceptance cases; extend before handoff
-  test_heap_dijkstra.cpp  Independent B algorithm acceptance cases
-  test_generation.cpp Initial C acceptance cases; extend before handoff
-  test_dijkstra.cpp   Integration and independent-reference entry point
-  reference_bellman_ford.hpp  TODO: Member C
-experiments/scripts/
-  run_experiments.py        TODO: Member C; --help is available
-  summarize_results.py     TODO: Member C; --help is available
-  plot_results.py          TODO: Member C; --help is available
-```
-
-## Individual development entry points
-
-```bash
-make test-matrix
-make test-heap
-make test-heap-dijkstra
-make test-generation
-make test-dijkstra
 ./build/dijkstra_benchmark --demo matrix
 ./build/dijkstra_benchmark --demo heap
+./build/dijkstra_benchmark --n 20 --m 80 --seed 2001 --mode check
+./build/dijkstra_benchmark --n 20 --m 80 --seed 2001 --mode count
+./build/dijkstra_benchmark --n 20 --m 80 --seed 2001 --mode timing --repeats 3
 ```
 
-Each test executable reports PASS (exit 0), FAIL (exit 1), or PENDING (exit 2). Until implementations are complete, relevant tests/demos report PENDING. make test compiles and runs all test programs and fails if any is pending or failing. A compiling scaffold is not evidence of correct Dijkstra.
+All source functions return actual results; no fabricated placeholder data are used. Full make test checks algorithms, generator, reference integration and CLI. See [running guide](running-guide.md) for flags, timing boundaries, CSV schemas and pilot records.
 
-A/B use teaching_graph(), make_matrix()/make_list(), source 0 and expected [0,3,1,4,7]. They can construct additional EdgeListGraph fixtures without generation.cpp. The fixed demos print actual algorithm results through write_result_csv; they never print the expected answer as a computed result.
+## Files and ownership
 
-## Planned pipeline entry points
+| Files | Purpose |
+| --- | --- |
+| include/types.hpp, graph.hpp, generation.hpp | Shared types and input contract |
+| include/dijkstra.hpp, min_heap.hpp | Algorithm/queue interfaces |
+| include/benchmark.hpp, output.hpp | Measurement configuration and serialization |
+| src/graph.cpp, generation.cpp | Shared graph construction |
+| src/dijkstra_matrix.cpp | Matrix/array algorithm |
+| src/min_heap.cpp, dijkstra_heap.cpp | Indexed-heap algorithm |
+| src/main.cpp, benchmark.cpp, output.cpp | CLI, verification, measurement, output |
+| tests/reference_bellman_ford.hpp, test_dijkstra.cpp | Independent integration validation |
+| tests/test_cli.py | Public CLI and CSV/error checks |
 
-The batch CLI arguments in execution-plan.md are still a target. The current C++ binary accepts only --help and --demo matrix/heap; random-input and measurement flags are not parsed yet.
-
-Python scripts accept their planned path arguments and provide --help, then explicitly exit PENDING for actual processing. They create no fabricated data or charts.
-
-Member C extends these scaffold entry points and synchronizes the supported CLI with documentation. Use run IDs and the existing parameter CSV, validate full distances before timing, and keep counting separate.
-
-## Header and output handoff rules
-
-Both teammates use existing DijkstraResult/OperationStats and return arrays of length n. Do not print/timestamp inside algorithm bodies. Coordinate before changing a header. Equal priorities use vertex-ID tie-breaking; absent matrix edges use INF, not 0.
-
-Basic result CSV uses vertex,distance,parent, with INF for unreachable distance and NONE for source/unreachable parent. Member C adds timing/count fields from experiment-plan.md and path/report views if useful.
-
-See [team roles](team-roles.md) for file ownership and [execution plan](execution-plan.md) for end-to-end steps.
+Member A/B implementation responsibilities and original handoffs remain in [team roles](team-roles.md); Member C owns generation/measurement/automation and coordinates analysis. Both algorithms use shared DijkstraResult and OperationStats. Source/unreachable parents are empty; absence is INF; equal priorities use vertex ID. Keep clocks/output/generation outside algorithm functions.

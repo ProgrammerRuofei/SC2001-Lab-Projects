@@ -2,7 +2,7 @@
 
 This project compares Dijkstra implementations using (a) an adjacency matrix and an array priority queue, and (b) an array of adjacency lists and a binary min-heap. Part (c) evaluates when each implementation is preferable.
 
-**Current status: a compilable framework with graph conversion, fixed demo inputs, result CSV formatting, a Makefile, acceptance-test entry points, and explicit C++/Python TODOs. Core algorithms, generator, independent reference, and measurement/analysis logic remain pending. There are no measured results.**
+**Current status: both Dijkstra implementations and the indexed heap are implemented. Shared graph conversion, fixed fixtures, CSV result formatting and build/test entry points are available. Connected random generation is implemented and tested. The shared test reference, random-input CLI and measurement pipeline are implemented, and full tests pass. Four pilot configurations have run successfully. Python batch/summary/plot processing and formal main experiments remain pending.**
 
 ## Start here
 
@@ -15,7 +15,10 @@ Read the [detailed execution plan](docs/execution-plan.md) for implementation st
 | [Project schedule](docs/project-plan.md) | Dependencies, milestones, and daily deliverables |
 | [Team handoff](docs/team-handoff.md) | Message and agent prompts for teammates |
 | [Team roles](docs/team-roles.md) | A/B own algorithms; C owns generation, output, experiments and analysis |
+| [Running guide](docs/running-guide.md) | Working random-input commands, CSV schemas and pilot records |
 | [Framework guide](docs/framework-guide.md) | Build commands, available helpers, and explicit pending modules |
+| [Generator walkthrough](docs/generator-implementation.md) | Input generation, validation, sampling and reproducibility |
+| [Matrix walkthrough](docs/matrix-implementation.md) | Explain the completed matrix version and tests |
 | [Learning guide](docs/learning-guide.md) | Trace both implementations on one small graph |
 | [Architecture](docs/architecture.md) | Types, graph representations, interfaces, and counters |
 | [Correctness plan](docs/correctness-plan.md) | Hand-computed cases and independent validation |
@@ -57,4 +60,4 @@ make test-graph
 ./build/dijkstra_benchmark --help
 ```
 
-See [framework guide](docs/framework-guide.md) for module-specific tests. Full `make test` deliberately fails while any required implementation is PENDING.
+See [framework guide](docs/framework-guide.md) for module-specific tests. Full `make test` now validates all C++ modules and the CLI. Python experiment processors remain separate TODOs.

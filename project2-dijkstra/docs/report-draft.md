@@ -1,6 +1,6 @@
 # Project 2 report draft
 
-Owner: Member C, reviewed by Members A and B. This is a writing template, not a completed report. All observations, measurements, and performance conclusions remain pending.
+Owner: Member C, reviewed by Members A and B. This is a writing template, not a completed report. Formal main-suite measurements and performance conclusions remain pending. Four pilot configurations have validated the C++ entry point; this does not establish final comparative conclusions.
 
 ## 1. Problem and implementation choices
 

@@ -33,4 +33,4 @@ The PDF does not specify the deadline, submission channel, language, group size,
 - [ ] Figures support conditional comparisons rather than universal performance claims.
 - [ ] Every member can trace both implementations and explain the results.
 
-Current status: infrastructure and explicit implementation scaffolds. No core-algorithm or experimental requirement is marked complete.
+Current status: infrastructure and explicit implementation scaffolds. Core implementations and correctness checks are complete. Pilot output is available; formal main experiments and empirical conclusions remain pending.

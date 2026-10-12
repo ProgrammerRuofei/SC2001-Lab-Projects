@@ -1,12 +1,26 @@
 #pragma once
 #include "graph.hpp"
-#include "scaffold.hpp"
+#include <stdexcept>
 
+// Test-only independent edge-list oracle; it never uses Dijkstra or its heap.
 inline std::vector<project2::Distance> reference_bellman_ford(
     const project2::EdgeListGraph& graph, project2::Vertex source) {
-    // OWNER: Member C; test-only independent oracle, never timed as Dijkstra.
-    // TODO: initialize distances; perform at most n-1 full edge passes.
-    // Relax both directions of undirected edges, skip INF, guard additions.
-    (void)graph; (void)source;
-    throw project2::NotImplemented("Member C: independent test reference");
+    using namespace project2;
+    if (source >= graph.vertex_count) throw std::invalid_argument("Invalid reference source");
+    std::vector<Distance> distances(graph.vertex_count, kInfinity);
+    distances[source] = 0;
+    for (Vertex round = 1; round < graph.vertex_count; ++round) {
+        bool changed = false;
+        for (const auto& edge : graph.edges) {
+            auto relax = [&](Vertex u, Vertex v) {
+                if (distances[u] == kInfinity || edge.weight >= kInfinity - distances[u]) return;
+                const auto candidate = distances[u] + edge.weight;
+                if (candidate < distances[v]) { distances[v] = candidate; changed = true; }
+            };
+            relax(edge.u, edge.v);
+            relax(edge.v, edge.u);
+        }
+        if (!changed) break;
+    }
+    return distances;
 }

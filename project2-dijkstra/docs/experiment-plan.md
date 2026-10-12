@@ -1,6 +1,6 @@
 # Experiment parameters and measurement rules
 
-**All parameters below are proposed. No experiments have been executed.** C++/Python scaffold files exist, but algorithm, generation, measurement and processing logic remain pending.
+**Formal main-suite parameters below remain proposed. Four pilot entry-point configurations have been executed successfully.** Algorithms, generation, independent validation and the C++ measurement CLI are implemented. Python batch/summary/plot processing remains pending; see running-guide.md for working commands and pilot records.
 
 ## Shared setup
 

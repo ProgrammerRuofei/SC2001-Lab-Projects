@@ -1,6 +1,6 @@
 # C++ framework and implementation ownership
 
-Shared conversion/formatting and demo dispatch are available. Algorithm, core heap, generator and benchmark files exist as explicit TODOs.
+Shared conversion/formatting and demo dispatch are available. Both algorithms and the indexed heap are implemented; the connected generator is implemented; the random-input benchmark/check/count pipeline is implemented.
 
 | File | Responsibility | Lead |
 | --- | --- | --- |
