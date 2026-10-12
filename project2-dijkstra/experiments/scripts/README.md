@@ -1,9 +1,15 @@
-# Python script scaffolds
+# Experiment scripts
 
-| Script | Input | Output | Lead |
-| --- | --- | --- | --- |
-| run_experiments.py | Configuration CSV and compiled C++ benchmark | Raw timings/counts and environment JSON | C |
-| summarize_results.py | Raw run directory | Per-graph medians, configuration summaries, paired ratios | C, reviewed by A |
-| plot_results.py | Summary directory | Four main charts and optional diagnostics | C, reviewed by A/B |
+All three processors are implemented and validated.
 
-Use Python's CSV/JSON support and Matplotlib for plots; add dependencies when implementing. Script files and argument parsers exist, but actual processing explicitly exits PENDING. The C++ entry-point pilot is complete, but these Python batch/analysis processors remain TODOs. Proposed CLI examples are in the [execution plan](../../docs/execution-plan.md).
+| Script | Input | Output |
+| --- | --- | --- |
+| run_experiments.py | Config CSV and optimized C++ binary | Paired raw timings/counts, config snapshot, environment/build metadata |
+| summarize_results.py | Completed raw run directory | Per-graph medians, across-seed summaries, same-graph ratios, validation manifest |
+| plot_results.py | Validated summary directory | PNG/SVG figures and plot/data provenance manifest |
+
+experiment_common.py owns config/record validation and linear type-7 quantiles. Tests in tests/test_experiments.py check aggregation math and rejection of missing, duplicated, nonfinite, failed or unpaired data.
+
+Runner/summary require Python 3.9+ standard libraries. Plotting additionally requires Matplotlib (see ../requirements.txt). Use one machine/build, preserve raw data, and create a fresh output directory per run. Plotting supports --overwrite for regenerating its named figure files after presentation changes.
+
+Commands and completed main-v1 results are documented in [running guide](../../docs/running-guide.md) and [report](../../docs/report-draft.md).

@@ -6,7 +6,7 @@ CORE := src/graph.cpp src/generation.cpp src/dijkstra_matrix.cpp src/min_heap.cp
 OBJECTS := $(CORE:src/%.cpp=$(BUILD)/%.o)
 TESTS := $(BUILD)/test_graph $(BUILD)/test_matrix $(BUILD)/test_heap $(BUILD)/test_heap_dijkstra $(BUILD)/test_dijkstra $(BUILD)/test_generation
 
-.PHONY: all test test-graph test-matrix test-heap test-heap-dijkstra test-dijkstra test-generation test-cli clean
+.PHONY: all test test-graph test-matrix test-heap test-heap-dijkstra test-dijkstra test-generation test-cli test-experiments clean
 all: $(BUILD)/dijkstra_benchmark
 
 $(BUILD):
@@ -22,7 +22,7 @@ $(BUILD)/test_%: tests/test_%.cpp $(OBJECTS) $(wildcard include/*.hpp) $(wildcar
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< $(OBJECTS) -o $@
 
 test: $(TESTS) $(BUILD)/dijkstra_benchmark
-	@status=0; for test_bin in $(TESTS); do "$$test_bin"; code=$$?; if [ $$code -ne 0 ]; then status=1; fi; done; python3 tests/test_cli.py --binary $(BUILD)/dijkstra_benchmark; code=$$?; if [ $$code -ne 0 ]; then status=1; fi; exit $$status
+	@status=0; for test_bin in $(TESTS); do "$$test_bin"; code=$$?; if [ $$code -ne 0 ]; then status=1; fi; done; python3 tests/test_cli.py --binary $(BUILD)/dijkstra_benchmark; code=$$?; if [ $$code -ne 0 ]; then status=1; fi; python3 tests/test_experiments.py; code=$$?; if [ $$code -ne 0 ]; then status=1; fi; exit $$status
 
 test-graph: $(BUILD)/test_graph
 	"$<"
@@ -39,6 +39,9 @@ test-generation: $(BUILD)/test_generation
 
 test-cli: $(BUILD)/dijkstra_benchmark
 	python3 tests/test_cli.py --binary $(BUILD)/dijkstra_benchmark
+
+test-experiments:
+	python3 tests/test_experiments.py
 
 clean:
 	rm -rf $(BUILD)

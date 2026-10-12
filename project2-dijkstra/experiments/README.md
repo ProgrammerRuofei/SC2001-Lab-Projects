@@ -1,11 +1,17 @@
-# Experiment inputs and planned workflow
+# Completed experimental workflow
 
-Configuration tables and the C++ measurement CLI work. Python runner and analysis processing remain pending. Four entry-point pilot configurations have been validated; see docs/running-guide.md.
+Pilot-batch-v1 and main-v1 have run through execution, validation, aggregation and visualization. Main-v1 contains all 19 planned configurations, 95 graphs, 1330 time samples and 190 counter records. No configurations failed.
 
-- [pilot.csv](configs/pilot.csv): small checks plus largest proposed matrix/dense inputs.
-- [main.csv](configs/main.csv): sparse growth, dense growth, and fixed-n varying-density suites.
-- [optional-fixed-m.csv](configs/optional-fixed-m.csv): secondary fixed-m study.
+- [pilot.csv](configs/pilot.csv): four pipeline/resource checks.
+- [main.csv](configs/main.csv): S1 sparse growth, S2 dense growth, S3 fixed-n density sweep; used unchanged in main-v1.
+- [optional-fixed-m.csv](configs/optional-fixed-m.csv): optional additional study, not run and not required for the main guide coverage.
 
-Seeds are semicolon-separated. timing_repeats and warmup_repeats are per graph per algorithm. requested_density is a target; actual density is m/(n(n-1)/2) after rounding. Sparse rows use exact m=4n and leave requested_density empty.
+```bash
+python3 scripts/run_experiments.py --config configs/main.csv --binary ../build/dijkstra_benchmark --output-dir ../results/raw/new-run
+python3 scripts/summarize_results.py --run-dir ../results/raw/new-run --output-dir ../results/new-run
+python3 scripts/plot_results.py --input-dir ../results/new-run --output-dir ../figures/new-run
+```
 
-Pass the [correctness gate](../docs/correctness-plan.md) before measurement. Read the [experiment plan](../docs/experiment-plan.md) for parameters and the [execution plan](../docs/execution-plan.md) for planned commands. The scripts provide --help and explicitly report PENDING for actual processing. Formal runs require their TODO implementations.
+These commands run from experiments/. Use fresh names to preserve earlier output. Install plotting requirements in your chosen environment if needed. Config seeds are semicolon-separated; repetitions and warmups are per graph/version. Actual density is calculated from exact m, not the rounded requested label.
+
+Read [results and guide coverage](../docs/report-draft.md), [measurement rules](../docs/experiment-plan.md), and [running guide](../docs/running-guide.md).

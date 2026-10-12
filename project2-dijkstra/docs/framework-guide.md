@@ -9,9 +9,9 @@
 - Random-input CLI and check/timing/count pipeline.
 - Full C++ tests and standard-library Python CLI validation.
 
-## Pending
+## Remaining review
 
-Python batch experiment execution, aggregation and plotting logic remain TODOs in experiments/scripts/. Their --help parsers exist but actual processing still exits PENDING. This is separate from the now-working C++ measurement entry point.
+Python execution, aggregation and plotting are implemented and have completed pilot and main-v1. The optional fixed-m experiment has not been run. Team review and any separately required submission formatting remain.
 
 ## Commands
 

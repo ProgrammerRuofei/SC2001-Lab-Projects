@@ -1,0 +1,17 @@
+{
+  "run_id": "pilot-batch-v1",
+  "matplotlib": "3.10.5",
+  "summary_sha256": "d1279674e6b32a3e91c80d0bb1bf4e5175bdb526c1c35ab1c11c0a23ebaaabef",
+  "ratio_summary_sha256": "983a4924202cb8d852c814a6fb731ced9bd27f440f782fc2d2e02de3e6faeb8b",
+  "error_bars": "Q1-Q3 across graph-level medians, not confidence intervals",
+  "figures": [
+    {
+      "name": "pilot-overview",
+      "caption": "Pilot validation only; not a final performance conclusion.",
+      "files": [
+        "pilot-overview.png",
+        "pilot-overview.svg"
+      ]
+    }
+  ]
+}

@@ -59,4 +59,4 @@ Tests verify exact counts, canonical order, unique edges, weight range, raw-edge
 
 A separate correctness smoke check covers all four pilot configurations, including n=1600/m=639600 and n=3200/m=12800. It validates counts, uniqueness, weights and connectivity without reporting performance measurements.
 
-The generator is callable through its C++ interface. The CLI now supports random-input parsing and check/timing/count modes; see running-guide.md. Python batch processing remains the next stage.
+The generator is callable through its C++ interface. The CLI now supports random-input parsing and check/timing/count modes; see running-guide.md. Python batch processing and main-v1 are complete; see experiment-results.md.

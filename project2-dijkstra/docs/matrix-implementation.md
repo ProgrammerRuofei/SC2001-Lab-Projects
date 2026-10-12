@@ -86,4 +86,4 @@ Matrix tests check hand/boundary cases, safe large distances, invalid sources, p
 
 An independent test-only Floyd-Warshall implementation builds its own distance table from canonical edges. Tests exhaust all 729 four-vertex absent/zero/positive edge assignments and all four sources, then check all sources in 250 deterministic random graphs with n=2..30 and varied density.
 
-This oracle is confined to matrix tests, not a new production shortest-path implementation. The shared Bellman-Ford reference, generator and C++ benchmark modes are now implemented, and full make test passes. Formal main experiments and Python processing remain separate tasks.
+This oracle is confined to matrix tests, not a new production shortest-path implementation. The shared Bellman-Ford reference, generator and C++ benchmark modes are now implemented, and full make test passes. Formal main experiments and Python processing are now complete; see experiment-results.md.

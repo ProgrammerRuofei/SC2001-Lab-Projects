@@ -20,6 +20,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.ipynb_checkpoints/
 .venv/
 venv/
 env/
@@ -41,4 +42,3 @@ project2-dijkstra/results/raw/
 *.raw
 
 # Keep small CSV summaries and figures versionable by default.
-

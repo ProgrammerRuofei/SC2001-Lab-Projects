@@ -26,11 +26,11 @@ The PDF does not specify the deadline, submission channel, language, group size,
 
 ## Completion checklist
 
-- [ ] Both implementations use the required structures and pass independent correctness checks.
-- [ ] Complexity derivations match the actual heap implementation.
-- [ ] Sparse growth, dense growth, and fixed-n varying-m experiments are complete.
-- [ ] Raw measurements, seeds, environment, and aggregation rules are preserved.
-- [ ] Figures support conditional comparisons rather than universal performance claims.
+- [x] Both implementations use the required structures and pass independent correctness checks.
+- [x] Complexity derivations match the actual heap implementation.
+- [x] Sparse growth, dense growth, and fixed-n varying-m experiments are complete.
+- [x] Raw measurements, seeds, environment, and aggregation rules are preserved.
+- [x] Figures support conditional comparisons rather than universal performance claims.
 - [ ] Every member can trace both implementations and explain the results.
 
-Current status: infrastructure and explicit implementation scaffolds. Core implementations and correctness checks are complete. Pilot output is available; formal main experiments and empirical conclusions remain pending.
+Current status: infrastructure and explicit implementation scaffolds. Core implementations and correctness checks are complete. Formal main measurements, charts and empirical discussion are complete in report-draft.md. Confirm any separate course submission instructions.

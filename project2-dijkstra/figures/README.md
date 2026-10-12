@@ -1,11 +1,7 @@
-# Planned figures
+# Generated figures
 
-No figures have been generated.
+Main-v1 has four main PNG/SVG figures: sparse-time-vs-n, dense-time-vs-n, density-time, density-speedup. overview combines these four views; operation-counts explains traversal and actual decrease-key work. Pilot-batch-v1 has a pipeline-validation chart.
 
-1. sparse-time-vs-n.png: m=4n, time against n for both algorithms.
-2. dense-time-vs-n.png: target density 0.5, time against n.
-3. density-time.png: n=1000, time against actual density or m.
-4. density-speedup.png: n=1000, paired matrix/heap ratio with reference line 1.
-5. Optional diagnostic charts: matrix scans against n², list scans against 2m, decrease-key counts against m.
+Each directory has manifest.json recording input-data hashes, plot-script hash, plotting version and captions. Error bars are across-seed Q1–Q3 of graph medians (or paired graph ratios), not confidence intervals. Logarithmic axes are explicitly labeled.
 
-Store each run's charts under figures/<run_id>/. Label units, graph type, sample counts, aggregation, and the meaning of error bars. Every chart must trace to CSV and run ID, with an explanation of the conclusion it supports.
+[Overview](main-v1/overview.png) and [diagnostics](main-v1/operation-counts.png) support the [experimental report](../docs/report-draft.md). Keep source tables and manifests with charts; do not manually change values to force a theoretical trend or crossover.

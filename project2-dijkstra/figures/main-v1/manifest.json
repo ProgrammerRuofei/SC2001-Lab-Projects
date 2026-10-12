@@ -1,0 +1,58 @@
+{
+  "run_id": "main-v1",
+  "matplotlib": "3.10.5",
+  "plot_script_sha256": "c77cb4ed00691aa2412fa4dfdd0b88ef5bffb98cfa2db6057cc95db7f95b9a11",
+  "summary_sha256": "83263dd202fff60d81c259039d5270f52089995933a0882c3b8842905c8ba25b",
+  "ratio_summary_sha256": "909b630eafb30ad92b14174dad8f15bef5a8c6821ca5348f066a5744c0ac326b",
+  "error_bars": "Q1-Q3 across graph-level medians, not confidence intervals",
+  "figures": [
+    {
+      "name": "sparse-time-vs-n",
+      "caption": "Measured timings or paired ratios; Median of graph medians; bars: Q1\u2013Q3 across 5 graphs; 7 timed calls per graph.",
+      "files": [
+        "sparse-time-vs-n.png",
+        "sparse-time-vs-n.svg"
+      ]
+    },
+    {
+      "name": "dense-time-vs-n",
+      "caption": "Measured timings or paired ratios; Median of graph medians; bars: Q1\u2013Q3 across 5 graphs; 7 timed calls per graph.",
+      "files": [
+        "dense-time-vs-n.png",
+        "dense-time-vs-n.svg"
+      ]
+    },
+    {
+      "name": "density-time",
+      "caption": "Measured timings or paired ratios; Median of graph medians; bars: Q1\u2013Q3 across 5 graphs; 7 timed calls per graph.",
+      "files": [
+        "density-time.png",
+        "density-time.svg"
+      ]
+    },
+    {
+      "name": "density-speedup",
+      "caption": "Measured timings or paired ratios; Median of graph medians; bars: Q1\u2013Q3 across 5 graphs; 7 timed calls per graph.",
+      "files": [
+        "density-speedup.png",
+        "density-speedup.svg"
+      ]
+    },
+    {
+      "name": "overview",
+      "caption": "Four main experimental views. Median of graph medians; bars: Q1\u2013Q3 across 5 graphs; 7 timed calls per graph.",
+      "files": [
+        "overview.png",
+        "overview.svg"
+      ]
+    },
+    {
+      "name": "operation-counts",
+      "caption": "Counters explain work; different operation types are not equivalent time units.",
+      "files": [
+        "operation-counts.png",
+        "operation-counts.svg"
+      ]
+    }
+  ]
+}

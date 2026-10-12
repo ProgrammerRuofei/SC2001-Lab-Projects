@@ -1,6 +1,6 @@
 # Experiment parameters and measurement rules
 
-**Formal main-suite parameters below remain proposed. Four pilot entry-point configurations have been executed successfully.** Algorithms, generation, independent validation and the C++ measurement CLI are implemented. Python batch/summary/plot processing remains pending; see running-guide.md for working commands and pilot records.
+**Main-v1 has executed the parameters below unchanged: 19 configurations, 95 graphs, 1330 timing samples and 190 count records, all validated.** Pilot-batch-v1 validated the full three-script pipeline first. See report-draft.md for actual results and guide coverage.
 
 ## Shared setup
 
@@ -58,7 +58,7 @@ M=499500; m=floor(p*M).
 
 Plot time and paired speed ratio against actual density or m. Matrix scan counts stay fixed; list entries increase. Graphs at different densities are not guaranteed nested, but both algorithms share each graph within a configuration.
 
-The [main table](../experiments/configs/main.csv) has 19 configurations: 95 graphs and 1330 formal timing samples, excluding warmups/checks/counting. These are planned totals, not observed results.
+The [main table](../experiments/configs/main.csv) has 19 configurations: 95 graphs and 1330 formal timing samples, excluding warmups/checks/counting. These totals were observed and validated in main-v1.
 
 ## Optional S4: fixed m=8000
 

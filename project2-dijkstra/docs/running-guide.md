@@ -1,6 +1,6 @@
 # Running the random-input and measurement entry points
 
-The C++ generator, matrix/array algorithm, indexed-heap algorithm, shared test reference, CLI and check/timing/count modes are implemented. Python batch/summary/plot processors are still TODOs.
+The C++ generator, matrix/array algorithm, indexed-heap algorithm, shared test reference, CLI and check/timing/count modes are implemented. Python batch/summary/plot processors are also implemented; main-v1 results are in experiment-results.md.
 
 ## Build and full correctness gate
 
@@ -70,7 +70,7 @@ Without --output, CSV goes to stdout. With --output, the named file is written a
 
 Random input requires both --n and --m. Numeric options accept decimal integers in range; missing/unknown/duplicate options, invalid modes, invalid source, impossible edge counts, invalid weights and zero timing repetitions are rejected. stderr reports ERROR and the process returns 1. --help lists defaults and supported options.
 
-If a runtime error occurs after some timing rows were written, the nonzero exit marks the invocation incomplete. Batch processing must retain the failure, verify sample completeness and avoid treating a partial run as a complete configuration. The runner remains the next implementation stage.
+If a runtime error occurs after some timing rows were written, the nonzero exit marks the invocation incomplete. Batch processing must retain the failure, verify sample completeness and avoid treating a partial run as a complete configuration. The implemented runner preserves failures and the summarizer refuses incomplete runs.
 
 ## CSV schemas
 
@@ -98,4 +98,4 @@ Four pilot configurations were exercised in separate timing/count modes: (100,40
 
 Local raw files are under results/raw/pilot-entrypoint-check/: timings.csv, counts.csv and environment.json. Metadata preserves commands, build flags, compiler/platform, revision/working-tree status and binary/config hashes. This checks the pipeline; it does not establish final performance conclusions. Raw files are ignored by Git.
 
-Next: implement the three Python processors, retain metadata for formal runs, then execute main.csv and analyze within-graph medians, across-seed summaries, paired ratios and charts as described in experiment-plan.md.
+Main-v1 is now complete through all three Python processors. See report-draft.md and experiment-results.md for measured evidence. Reproduction commands are in the report; use new output names.

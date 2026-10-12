@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "graphs": 4,
+  "timing_rows": 24,
+  "count_rows": 8,
+  "per_graph_rows": 8,
+  "summary_rows": 8,
+  "paired_rows": 4,
+  "configurations": 4,
+  "method": "median within graph; median and linear type-7 Q1/Q3 across graph medians; same-graph ratios"
+}

@@ -1,0 +1,5 @@
+run_id,suite,n,m,source,weight_min,weight_max,graph_id,graph_seed,actual_density,matrix_median_ms,heap_median_ms,speedup
+pilot-batch-v1,pilot_sparse_small,100,400,0,1,1000,pilot_sparse_small:connected-path-v1:n100:m400:seed2001:weights1-1000:source0,2001,0.08080808080808081,0.027125,0.004875,5.564102564102564
+pilot-batch-v1,pilot_dense_medium,400,39900,0,1,1000,pilot_dense_medium:connected-path-v1:n400:m39900:seed2001:weights1-1000:source0,2001,0.5,0.910542,0.283875,3.207545574636724
+pilot-batch-v1,pilot_dense_max,1600,639600,0,1,1000,pilot_dense_max:connected-path-v1:n1600:m639600:seed2001:weights1-1000:source0,2001,0.5,14.998667,4.622333,3.2448261516424712
+pilot-batch-v1,pilot_matrix_max,3200,12800,0,1,1000,pilot_matrix_max:connected-path-v1:n3200:m12800:seed2001:weights1-1000:source0,2001,0.0025007814942169426,27.018708,0.469083,57.598992076029184

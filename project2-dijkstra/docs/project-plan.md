@@ -37,4 +37,4 @@ Graph generation and reference tests can progress while algorithm modules are be
 
 Heap failures: isolate heap tests before debugging the graph algorithm. Resource pressure: estimate matrix storage and pilot the largest inputs. Short timings: preserve high-resolution values and increase scale/repetitions if needed. Unexpected trends: check input equivalence, build, counters, and measurement boundaries before interpreting.
 
-The shared graph conversion and build scaffold are available. Algorithm correctness, generation and C++ measurement entry points are complete. Python automation and formal experimental/analysis milestones remain pending. See [framework guide](framework-guide.md) and [updated roles](team-roles.md).
+The shared graph conversion and build scaffold are available. Algorithm correctness, generation and C++ measurement entry points are complete. Python automation, formal measurements, plots and the English result report are now complete. Team review and adaptation to any separately announced submission format remain to be done. See [framework guide](framework-guide.md) and [updated roles](team-roles.md).

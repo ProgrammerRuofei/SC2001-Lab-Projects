@@ -1,6 +1,6 @@
 # Detailed execution plan: assignment parts (a), (b), and (c)
 
-This plan describes how to complete the project from the current interface scaffold. **A compilable framework, shared conversion, fixed fixtures and output formatting are available. Both algorithms and the indexed heap are implemented; the connected generator is implemented; benchmark/shared-reference functions and the random-input CLI are implemented; Python processors remain TODOs. Four entry-point pilot configurations are validated, with formal main experiments still pending.** Technical choices and parameters below are proposals, not additional course requirements.
+This plan describes how to complete the project from the current interface scaffold. **A compilable framework, shared conversion, fixed fixtures and output formatting are available. Both algorithms and the indexed heap are implemented; the connected generator is implemented; benchmark/shared-reference functions and the random-input CLI are implemented; All Python processors and main-v1 are now complete. See experiment-results.md and report-draft.md for actual evidence.** Technical choices and parameters below are proposals, not additional course requirements.
 
 Assignment parts (a)/(b)/(c) are distinct from Member A/B/C. Part (c) is a shared team deliverable, not exclusively Member C's task.
 
@@ -233,7 +233,7 @@ Raw data goes to results/raw/<run_id>/; validated summaries/metadata to results/
 
 ### E5. Planned command sequence
 
-**The Makefile and full correctness gate work. Direct random-input measurement commands are in running-guide.md. The batch commands below remain proposed processing interfaces: Python scripts provide --help but exit PENDING for actual work.** Run from the project2-dijkstra directory.
+**The Makefile and full correctness gate work. Direct random-input measurement commands are in running-guide.md. The batch commands below are now implemented; use fresh output directories.** Run from the project2-dijkstra directory.
 
 ```bash
 make
