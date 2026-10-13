@@ -17,7 +17,7 @@ python -m notebook notebooks/project2_dijkstra.ipynb
 
 Use Python 3.10+ and select the installed Python environment as the notebook kernel. Run **Restart Kernel and Run All**. Default execution builds and runs two small C++ fixtures and reads the existing experiment summaries; it does not rerun the main benchmark. Building the fixtures requires `make` and a C++17 compiler. Set `RUN_CPP_DEMOS=False` in the first code cell to execute only the teaching example and archived analysis without a compiler. Saved outputs are readable without executing code.
 
-The first code cell also defines `RUN_FULL_TESTS=False` and `RERUN_MAIN_EXPERIMENT=False`. Enable the former to run the full existing test suite. Enable the latter only for an intentional new measurement: it creates timestamped output directories, while the report continues to describe `main-v1`. To report new measurements, update the selected evidence and review all numerical interpretations together. The notebook checks the C++ source/header hashes against the archived run; if those files change, that check deliberately fails so updated code is not silently presented as the measured version.
+The first code cell is a collapsed support loader; expand it to change the run controls. Detailed initialization and rendering helpers live in [notebook_setup.py](notebook_setup.py), with an explanation in the notebook appendix. It also defines `RUN_FULL_TESTS=False` and `RERUN_MAIN_EXPERIMENT=False`. Enable the former to run the full existing test suite. Enable the latter only for an intentional new measurement: it creates timestamped output directories, while the report continues to describe `main-v1`. To report new measurements, update the selected evidence and review all numerical interpretations together. The notebook checks the C++ source/header hashes against the archived run; if those files change, that check deliberately fails so updated code is not silently presented as the measured version.
 
 The project locator supports launching from the repository root, project root or notebook directory. Keep the notebook in the repository: source files, `experiments/configs/main.csv`, `results/main-v1` and `figures/main-v1` are required for execution. Raw rows in the ignored `results/raw/main-v1` directory are not required for the default analysis.
 
@@ -40,7 +40,7 @@ Edit explanatory Markdown directly in Jupyter or VS Code. Numeric tables are com
 After edits, restart and run all cells, then export the reading version:
 
 ```bash
-python -m nbconvert --to html notebooks/project2_dijkstra.ipynb
+python -m nbconvert --to html notebooks/project2_dijkstra.ipynb --TagRemovePreprocessor.remove_input_tags='["hide-input"]' --TagRemovePreprocessor.remove_all_outputs_tags='["hide-output"]'
 ```
 
 The original main run includes 19 configurations, 95 graphs, 1330 timing rows and 190 counter rows. For full raw-data reproduction, separately archive `results/raw/main-v1`; summary CSVs do not replace raw records. Review the team contribution statement before submission.
