@@ -7831,13 +7831,51 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><a id="project-questions"></a></p>
-<h2 id="1.-Project-questions">1. Project questions<a class="anchor-link" href="#1.-Project-questions">¶</a></h2><p>| Project guide | Required work | Evidence in this notebook |
-|---|---|---|
-| (a) | Adjacency matrix + array priority queue; theoretical and empirical time analysis in terms of $|V|$ and $|E|$ | Matrix source walkthrough, complexity derivation, S1/S2/S3 results |
-| (b) | Array of adjacency lists + minimizing heap; the same analyses | List/heap source walkthrough, complexity derivation, paired results |
-| (c) | Compare the implementations and discuss when each is preferable | Paired ratios, density study, conditional recommendations |</p>
+<h2 id="1.-Project-questions">1. Project questions<a class="anchor-link" href="#1.-Project-questions">¶</a></h2><table>
+<thead>
+<tr>
+<th>Project guide</th>
+<th>Required work</th>
+<th>Evidence in this notebook</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a)</td>
+<td>Adjacency matrix + array priority queue; theoretical and empirical time analysis in terms of vertex count n and edge count m</td>
+<td>Matrix source walkthrough, complexity derivation, S1/S2/S3 results</td>
+</tr>
+<tr>
+<td>(b)</td>
+<td>Array of adjacency lists + minimizing heap; the same analyses</td>
+<td>List/heap source walkthrough, complexity derivation, paired results</td>
+</tr>
+<tr>
+<td>(c)</td>
+<td>Compare the implementations and discuss when each is preferable</td>
+<td>Paired ratios, density study, conditional recommendations</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Our experimental choices:</strong> simple connected undirected graphs, integer weights 1–1000, source vertex 0, an indexed binary min-heap, seeded generation and paired timing. These choices make the experiment concrete; they are not additional requirements in the supplied one-page guide.</p>
 <p>We ask: How does vertex growth affect each version? How does adding edges change the cost? Does increasing density make the matrix version faster on our inputs?</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=58a0c06e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Notebook-initialization">Notebook initialization<a class="anchor-link" href="#Notebook-initialization">¶</a></h3><p>The next code cell prepares the notebook environment. It locates the project folder, selects the archived <code>main-v1</code> data and figures, imports Python tools, and defines reusable table/plot display functions. The Dijkstra implementations are in C++; this initialization cell does not compute shortest paths or run the main experiment.</p>
+<ul>
+<li><code>RUN_CPP_DEMOS=True</code>: build and run the small C++ example later in Section 3.5.</li>
+<li><code>RUN_FULL_TESTS=False</code>: skip the full test suite unless explicitly enabled.</li>
+<li><code>RERUN_MAIN_EXPERIMENT=False</code>: use existing results; do not collect a new main batch.</li>
+</ul>
+<p>Run this cell before subsequent code cells. For presentation, briefly explain its purpose and focus the algorithm discussion on Sections 2–4.</p>
 </div>
 </div>
 </div>
