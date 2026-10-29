@@ -6,6 +6,7 @@ Coursework repository for NTU SC2001 Algorithm Design and Analysis.
 
 - [`project1-hybrid-sorting/`](project1-hybrid-sorting/) - Project 1: integration of Merge Sort and Insertion Sort.
 - [`project2-dijkstra/`](project2-dijkstra/) - Project 2: Dijkstra with matrix/array and adjacency-list/min-heap implementations; currently a planning and interface scaffold.
+- [`project3-unbounded-knapsack/`](project3-unbounded-knapsack/) - Project 3: unbounded knapsack with bottom-up dynamic programming; runnable framework, implementation TODO, and English team guide.
 
 ## Repository guidelines
 
