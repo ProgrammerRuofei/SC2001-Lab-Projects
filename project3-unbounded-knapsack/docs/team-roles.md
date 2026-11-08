@@ -2,6 +2,8 @@
 
 Following the earlier projects, A, B, and C are member placeholders. This is an internal recommendation, not a course requirement. No names or current-user identity are assigned. Project 3 has one main DP algorithm, so the allocation covers algorithm design, independent validation and graph construction, and integration and reporting.
 
+Follow the [detailed implementation workflow](execution-plan.md) for the task order, concurrent work, handoffs, exact commands, and completion checks for each member.
+
 | Member | Main responsibilities | Primary files | Deliverables |
 | --- | --- | --- | --- |
 | A | Recurrence, correctness reasoning, bottom-up algorithm | src/knapsack.cpp, docs/theory.md | General DP implementation, pseudocode, complexity explanation |

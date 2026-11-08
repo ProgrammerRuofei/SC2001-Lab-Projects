@@ -2,6 +2,8 @@
 
 The plan uses work stages without assuming calendar dates. Complete the four assignment requirements before deciding on extensions.
 
+Use the [detailed implementation workflow](execution-plan.md) for step-by-step actions, member assignments, handoffs, and commands. This page provides the milestone summary.
+
 | Stage | A | B | C | Completion criterion |
 | --- | --- | --- | --- | --- |
 | 1: Understanding and interfaces | Explain recurrence and base cases | Trace examples and start graph | Learn entry point; run framework checks | All members agree on unlimited supply and unused capacity |

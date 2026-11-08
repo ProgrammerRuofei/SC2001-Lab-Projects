@@ -8,7 +8,7 @@ Maximize total profit by choosing from `n` item types while keeping total weight
 
 1. Read the [requirements](docs/requirements.md) to understand the four assignment tasks.
 2. Read the [framework guide](docs/framework-guide.md) for code entry points and pending functions.
-3. Allocate work using the [three-person team plan](docs/team-roles.md), then follow the [execution plan](docs/project-plan.md).
+3. Allocate work using the [three-person team plan](docs/team-roles.md), then follow the [detailed implementation workflow](docs/execution-plan.md).
 4. After implementation, use the [running guide](docs/running-guide.md) and [correctness plan](docs/correctness-plan.md) to produce actual results.
 
 ## Quick start
@@ -42,6 +42,7 @@ Makefile          Build, test, acceptance, and cleanup commands
 
 ## Additional documents
 
+- [Milestones and final checklist](docs/project-plan.md)
 - [Theory and algorithm design prompts](docs/theory.md)
 - [P(15) subproblem graph worksheet](docs/subproblem-graph.md)
 - [Report outline](docs/report-outline.md)
