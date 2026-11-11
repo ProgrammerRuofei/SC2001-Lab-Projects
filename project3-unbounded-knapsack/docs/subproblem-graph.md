@@ -78,9 +78,7 @@ At capacity `12`, either a weight-5 item plus the best solution for capacity
 - [x] Every non-leaf node includes all legal dependencies.
 - [x] Capacity 0 and other leaves that cannot fit any item have value 0.
 - [x] Shared subproblems have multiple incoming edges, and the graph is acyclic.
-- [ ] A checks the graph against the recurrence; C checks node values against the completed DP table.
+- [x] Integration review checked the graph against the recurrence and its node values against the computed DP table.
 
 The full DP table computes every capacity from 0 through 15. The dependency
-graph rooted at P(15) needs only capacities reachable from that root. After
-Member A implements the solver, `--case graph --table` can be used to compare
-the computed table with these manually derived values.
+graph rooted at P(15) needs only capacities reachable from that root. The computed table from `--case graph --table` agrees with these manually derived values; see `results/graph.txt`.

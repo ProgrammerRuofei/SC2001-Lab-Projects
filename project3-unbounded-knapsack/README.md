@@ -2,7 +2,7 @@
 
 Maximize total profit by choosing from `n` item types while keeping total weight at most capacity `C`. Each type has an unlimited supply. Items are indivisible, and unused capacity is allowed.
 
-**Current status: the project framework is ready; the core DP algorithm remains a team implementation task.** The C++17 build, CLI entry point, assignment inputs, input validation, output formatting, and test entry points are provided. The pending solver prints `PENDING` and exits with code 2. Expected answers are never presented as computed results.
+**Current status: the bottom-up solver, Member B graph and independent tests, and report draft are available locally.** The required cases and independent comparisons pass; see the [report](docs/report.md) and saved outputs in `results/`.
 
 ## Start here
 
@@ -24,7 +24,7 @@ make test
 make check-solution
 ```
 
-`make test` checks the provided infrastructure. Both solver commands and `make check-solution` report `PENDING` until the algorithm is implemented. Make reports the nonzero child exit code as an error. This indicates incomplete implementation, not a successful algorithm acceptance check.
+`make test` checks the framework and CLI; `make check-solution` checks the solver and independent enumeration comparisons.
 
 ## Structure
 
@@ -32,11 +32,11 @@ make check-solution
 include/          Shared types, solver interface, assignment inputs, output declarations
 src/main.cpp      Program entry point, argument parsing, module integration
 src/input.cpp     Input validation (implemented)
-src/knapsack.cpp  Core bottom-up DP (TODO; Member A leads)
+src/knapsack.cpp  Core bottom-up DP
 src/output.cpp    Maximum-profit and full DP-table output (implemented)
 tests/            Framework checks, CLI checks, and algorithm acceptance entry point
-docs/             Requirements, theory prompts, graph template, roles, report outline
-results/          Actual outputs to save after implementation
+docs/             Requirements, theory, graph, roles, and report
+results/          Actual outputs for the required cases and graph
 Makefile          Build, test, acceptance, and cleanup commands
 ```
 
@@ -45,7 +45,7 @@ Makefile          Build, test, acceptance, and cleanup commands
 - [Milestones and final checklist](docs/project-plan.md)
 - [Theory and algorithm design prompts](docs/theory.md)
 - [P(15) subproblem graph worksheet](docs/subproblem-graph.md)
-- [Report outline](docs/report-outline.md)
+- [Report](docs/report.md)
 
 All Project 3 documentation and report content must be written in English, including headings, tables, captions, diagram labels, and result explanations.
 
