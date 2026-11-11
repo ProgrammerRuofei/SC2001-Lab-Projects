@@ -1,0 +1,5 @@
+Subproblem graph of P(15): 10 nodes [15, 11, 10, 7, 6, 5, 3, 2, 1, 0], 15 edges
+Experiment 2 (n = 100): 5.78 ms per 100,000 of C, intercept -0.26 ms, R^2 = 0.9998, 0.578 ns per step
+Experiment 3 (C = 100,000): 4.75 ms per 100 types, intercept 0.69 ms, R^2 = 0.9996, 0.475 ns per step
+Experiment 4: plain recursion grows by x1.228 (time) and x1.226 (calls) per unit of C; theory x1.2259
+  C = 100: plain recursion 738,787,505 calls, 2363 ms; DP 0.26 us

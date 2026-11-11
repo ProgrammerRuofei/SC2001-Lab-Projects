@@ -1,0 +1,44 @@
+=== Questions (2) and (4): instances from the project sheet ===
+
+Question (2): capacity C = 15
+  type i :  0  1  2
+  w[i]   :  4  5  8
+  p[i]   :  7  6  9
+
+  c      :  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+  P(c)   :  0  0  0  0  7  7  7  7 14 14 14 14 21 21 21 21
+
+  P(15) = 21
+  packing: 3 x type 0
+  total weight 12 <= 15, total profit 21
+
+Question (4a): capacity C = 16
+  type i :  0  1  2
+  w[i]   :  4  5  8
+  p[i]   :  7  6  9
+
+  c      :  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+  P(c)   :  0  0  0  0  7  7  7  7 14 14 14 14 21 21 21 21 28
+
+  P(16) = 28
+  packing: 4 x type 0
+  total weight 16 <= 16, total profit 28
+
+Question (4b): capacity C = 12
+  type i :  0  1  2
+  w[i]   :  5  6  7
+  p[i]   :  7  6  9
+
+  c      :  0  1  2  3  4  5  6  7  8  9 10 11 12
+  P(c)   :  0  0  0  0  0  7  7  9  9  9 14 14 16
+
+  P(12) = 16
+  packing: 1 x type 0 + 1 x type 2
+  total weight 12 <= 12, total profit 16
+
+=== Experiment 1: correctness ===
+  10000 random instances (n <= 5, w <= 12, p <= 20, C <= 40)
+  P(C) equal to brute force, packing fits and is worth P(C): 0 wrong
+
+=== Experiments 2-4: running time ===
+  results/time_vs_C.csv, results/time_vs_n.csv, results/naive_vs_dp.csv
